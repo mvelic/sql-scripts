@@ -13,9 +13,10 @@
 DECLARE @schema SYSNAME = '<schema_name, sysname, table_name>',
     @table SYSNAME = '<table_name, sysname, table_name>';
 
-SELECT  'ALTER TABLE [' + s.name + '].[' + t.name + '] DROP CONSTRAINT [' + o.name + '];' AS DropStatements ,
-        'ALTER TABLE [' + s.name + '].[' + t.name + '] ADD CONSTRAINT [' + o.name + '] FOREIGN KEY (' + c.name + ') REFERENCES [dbo].[CCDDomain] (Id);' AS CreateStatements
-FROM    sys.foreign_key_columns AS fk
+SELECT
+	'ALTER TABLE [' + s.name + '].[' + t.name + '] DROP CONSTRAINT [' + o.name + '];' AS DropStatements
+	,'ALTER TABLE [' + s.name + '].[' + t.name + '] ADD CONSTRAINT [' + o.name + '] FOREIGN KEY (' + c.name + ') REFERENCES [dbo].[CCDDomain] (Id);' AS CreateStatements
+FROM sys.foreign_key_columns AS fk
 JOIN sys.tables AS t
 	ON fk.parent_object_id = t.object_id
 JOIN sys.columns AS c
